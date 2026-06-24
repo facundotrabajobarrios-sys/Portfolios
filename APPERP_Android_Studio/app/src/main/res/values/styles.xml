@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema base de la app -->
+    <style name="Theme.APPERP" parent="Theme.Material3.DayNight">
+        <!-- Configuraciones generales -->
+    </style>
+
+    <!-- Tema sin ActionBar -->
+    <style name="Theme.APPERP.NoActionBar" parent="Theme.APPERP">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>
