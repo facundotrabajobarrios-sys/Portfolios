@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_estate_property_offer_tree" model="ir.ui.view">
+        <field name="name">estate.property.offer.tree</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" 
+                  decoration-danger="status == 'refused'"
+                  decoration-success="status == 'accepted'">
+                <field name="property_id"/>
+                <field name="price"/>
+                <field name="partner_id"/>
+                <field name="date_deadline"/>
+                <field name="validity" readonly="1"/>
+                <field name="status" invisible="1"/>
+                <button name="action_accept" string="Aceptar" type="object"
+                        icon="fa-check" class="btn-success"
+                        invisible="status != False"/>
+                <button name="action_refuse" string="Rechazar" type="object"
+                        icon="fa-times" class="btn-danger"
+                        invisible="status != False"/>
+                <field name="property_type_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_estate_property_offer_form" model="ir.ui.view">
+        <field name="name">estate.property.offer.form</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_accept" string="Aceptar" type="object"
+                            class="btn-primary" invisible="status != False"/>
+                    <button name="action_refuse" string="Rechazar" type="object"
+                            class="btn-secondary" invisible="status != False"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="property_id" required="1"/>
+                        <field name="partner_id" required="1"/>
+                        <field name="price"/>
+                        <field name="validity" readonly="1"/>
+                        <field name="date_deadline"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View - VERSIÓN SIMPLIFICADA Y CORREGIDA -->
+    <record id="view_estate_property_offer_search" model="ir.ui.view">
+        <field name="name">estate.property.offer.search</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="price"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="status"/>
+                
+                <filter name="accepted" string="Aceptadas" domain="[('status', '=', 'accepted')]"/>
+                <filter name="refused" string="Rechazadas" domain="[('status', '=', 'refused')]"/>
+                
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_status" string="Estado" context="{'group_by': 'status'}"/>
+                    <filter name="group_by_property" string="Propiedad" context="{'group_by': 'property_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- ACCIÓN PRINCIPAL - Para el menú principal (sin filtros) -->
+    <record id="action_estate_property_offer_main" model="ir.actions.act_window">
+        <field name="name">Ofertas</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_estate_property_offer_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay ofertas registradas.
+            </p>
+        </field>
+    </record>
+
+    <!-- ACCIÓN SECUNDARIA - Para el botón en tipos de propiedad (con filtro) -->
+    <record id="action_estate_property_offer" model="ir.actions.act_window">
+        <field name="name">Ofertas por Tipo</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_estate_property_offer_search"/>
+        <field name="domain">[('property_type_id', '=', active_id)]</field>
+        <field name="context">{'default_property_type_id': active_id}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay ofertas para este tipo de propiedad.
+            </p>
+        </field>
+    </record>
+</odoo>

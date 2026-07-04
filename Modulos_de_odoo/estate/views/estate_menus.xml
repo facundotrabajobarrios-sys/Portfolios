@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú raíz -->
+    <menuitem 
+        id="menu_estate_root"
+        name="Inmobiliaria"
+        sequence="10"/>
+
+    <!-- Primer nivel: Configuración -->
+    <menuitem 
+        id="menu_estate_config"
+        name="Configuración"
+        parent="menu_estate_root"
+        sequence="5"/>
+    
+    <!-- Submenús de Configuración -->
+    <menuitem 
+        id="menu_estate_property_type"
+        name="Tipos de Propiedad"
+        parent="menu_estate_config"
+        action="action_estate_property_type"
+        sequence="10"/>
+
+    <menuitem 
+        id="menu_estate_property_tag"
+        name="Etiquetas"
+        parent="menu_estate_config"
+        action="action_estate_property_tag"
+        sequence="20"/>
+
+    <!-- Primer nivel: Operaciones -->
+    <menuitem 
+        id="menu_estate_operations"
+        name="Operaciones"
+        parent="menu_estate_root"
+        sequence="10"/>
+    
+    <!-- Submenús de Operaciones -->
+    <menuitem 
+        id="menu_estate_property"
+        name="Propiedades"
+        parent="menu_estate_operations"
+        action="action_estate_property"
+        sequence="10"/>
+    <menuitem 
+        id="menu_estate_property_offer"
+        name="Ofertas"
+        parent="menu_estate_operations"
+        action="action_estate_property_offer_main"
+        sequence="20"/>
+</odoo>
